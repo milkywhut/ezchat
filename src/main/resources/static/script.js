@@ -23,7 +23,7 @@ function connect() {
 function draw(side, message) {
     console.log("drawing...");
     let $message = $($('.message_template').clone().html());
-    $message.addClass(side).find('#user').html(message.login);
+    $message.addClass(side).find('.user').html(message.login);
     $message.addClass(side).find('.text').html(message.message);
     $('.messages').append($message);
     return setTimeout(function () {

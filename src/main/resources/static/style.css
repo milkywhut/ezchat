@@ -73,7 +73,7 @@ body {
     opacity: 0;
 }
 .messages .message.left .avatar {
-    background-color: #f5886e;
+    background-color: #77f5e1;
     float: left;
 }
 .messages .message.left .text_wrapper {
@@ -110,12 +110,15 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    display: inline-block;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.messages .message .avatar #user {
-    display: flex;
+.messages .message .avatar .user {
+    flex: 0 0 30px;
+    color: #3300ff;
+    text-align: center;
 }
 
 .messages .message .text_wrapper {
