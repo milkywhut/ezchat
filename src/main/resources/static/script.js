@@ -8,16 +8,20 @@ function connect() {
     };
     let socket = new SockJS("/chat-messaging");//for stomp endpoint in web socket config
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, frame => {
-        console.log("connected : " + frame);
-        stompClient.subscribe('/chat/messages', response => {
-            let data = JSON.parse(response.body);
-            console.log(data);
-            draw("left", data);
-        });
-    });
+    stompClient.connect({}, onConnect);
     $("#authentication").css("display", "none");
     $("#chat_window").css("display", "block");
+    $("#users").css("display", "block");
+}
+function onConnect(frame) {
+    console.log("connected : " + frame);
+    stompClient.subscribe('/chat/messages', onSubscribe);
+}
+
+function onSubscribe(response) {
+    let data = JSON.parse(response.body);
+    console.log(data);
+    draw("left", data);
 }
 
 function draw(side, message) {
@@ -29,12 +33,6 @@ function draw(side, message) {
     return setTimeout(function () {
         return $message.addClass('appeared');
     }, 0);
-}
-
-function disconnect() {
-    if (stompClient != null) {
-        stompClient.disconnect();
-    }
 }
 
 function sendMessage() {

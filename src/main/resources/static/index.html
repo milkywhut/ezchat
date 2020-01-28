@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>ezChat</title>
@@ -33,18 +33,18 @@
                 <input id="message_input_value" class="message_input" placeholder="Type your message here..." />
             </div>
             <button onclick="sendMessage()" class="text">Send</button>
-            <button onclick="disconnect()">Disconnect from chat</button>
         </div>
     </div>
     <div id="message_template" class="message_template">
-        <li class="message">
+        <div class="message">
             <div class="avatar">
                 <div class="user"></div>
             </div>
             <div class="text_wrapper">
                 <div class="text"></div>
             </div>
-        </li>
+        </div>
     </div>
+    <div id="users"></div>
 </body>
 </html>

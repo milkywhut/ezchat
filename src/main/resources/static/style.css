@@ -204,3 +204,11 @@ body {
 .message_template {
     display: none;
 }
+
+#users {
+    display: none;
+}
+
+#users .user {
+
+}
