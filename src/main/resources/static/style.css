@@ -13,14 +13,11 @@ body {
     width: calc(100% - 20px);
     max-width: 800px;
     height: 500px;
-    border-radius: 10px;
-    background-color: #fff;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     background-color: #f8f8f8;
-    /*overflow: hidden;*/
 
 }
 
@@ -152,10 +149,9 @@ body {
 }
 
 .bottom_wrapper {
-    position: relative;
     width: 100%;
     background-color: #fff;
-    padding: 20px 20px;
+    padding: 16px 20px;
     position: absolute;
     bottom: 0;
 }
@@ -201,8 +197,19 @@ body {
 
 #users {
     display: none;
+    position: absolute;
+    height: 500px;
+    width: calc(100% - 20px);
+    max-width: 100px;
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    background-color: #f8f8f8;
+    color: #3300ff;
+    top: 50%;
+    left: 79%;
 }
 
 #users .user {
-
+    text-align: center;
+    margin-bottom: 5px;
 }

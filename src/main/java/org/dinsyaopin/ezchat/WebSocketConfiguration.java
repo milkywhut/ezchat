@@ -13,10 +13,12 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry
                 .setApplicationDestinationPrefixes("/app")
-                .enableSimpleBroker("/chat");
+                .enableSimpleBroker("/chat", "/users");
     }
 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/chat-messaging").withSockJS();
+        registry
+                .addEndpoint("/chat-messaging")
+                .withSockJS();
     }
 }
