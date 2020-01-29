@@ -25,7 +25,7 @@ function onGetAllActiveUsers(response) {
     let userLogins = JSON.parse(response.body);
     $("#users").empty();
     for (let i = 0; i < userLogins.length; i++) {
-        $("#users").append("<div class='user'>" + userLogins[i] + "</div>");
+        $("#users").append("<div class='user_active'>" + userLogins[i] + "</div>");
     }
 }
 
@@ -49,10 +49,14 @@ function onUserConnectOrDisconnect(response) {
     let user = JSON.parse(response.body);
     if (user.type === 'CONNECTED') {
         console.log(user.login + 'connected');
-        $("#users").append("<div class='user'>" + user.login + "</div>");
+        $("#users").append("<div class='user_active'>" + user.login + "</div>");
     } else if (user.type === 'DISCONNECTED') {
         console.log(user.login + ' disconnected');
-        $(".user").filter(() => $(this).text() === user.login).remove();
+        let $users = $(".user_active");
+        let $disconnectedUser = $users.filter((i, element) => {
+            return element.innerHTML === user.login;
+        });
+        $disconnectedUser.remove();
     }
 }
 
