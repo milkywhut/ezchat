@@ -9,4 +9,16 @@ A simple browser chat based on Spring framework and websocket technology.
 * Spring framework, SockJS, Stomp.
 
 # Requirements
-  Java 8, browser.
+  Java 8, maven, browser.
+
+# How to build app?
+  Enter in command line interpreter the command:
+  ```
+  mvn package;
+  ```
+  
+# How to start app?
+  After the end of app building enter in command line interpreter the command:
+  ```
+  java -jar <name of jar file>
+  ```
