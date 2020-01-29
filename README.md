@@ -20,5 +20,5 @@ A simple browser chat based on Spring framework and websocket technology.
 # How to start app?
   After the end of app building enter in command line interpreter the command:
   ```
-  java -jar <name of jar file>
+  java -Dport=<required tcp port> -jar <name of jar file>
   ```
