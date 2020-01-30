@@ -15,11 +15,17 @@ function onConnect(frame) {
     $("#authentication").css("display", "none");
     $("#chat_window").css("display", "block");
     $("#users").css("display", "block");
-    stompClient.subscribe("/user/users", onGetAllActiveUsers);
+    //
+    stompClient.subscribe("/user/users", onGetAllActiveUsers); //in user controller
     stompClient.send("/app/users", {}, user.login);
-    stompClient.subscribe('/chat/messages', onGetMessage);
-    stompClient.subscribe('/users/user', onUserConnectOrDisconnect);
+
+    stompClient.subscribe("/chat/message", onGetMessage);
+    stompClient.subscribe("/users/user", onUserConnectOrDisconnect); //in listener
+
+    stompClient.subscribe("/user/chat/messages", onCurrentUserConnect);
+    stompClient.send("/app/messages", {}, user.login);
 }
+
 
 function onGetAllActiveUsers(response) {
     let userLogins = JSON.parse(response.body);
@@ -32,17 +38,6 @@ function onGetAllActiveUsers(response) {
 function onGetMessage(response) {
     let data = JSON.parse(response.body);
     draw("left", data);
-}
-
-function draw(side, message) {
-    console.log("drawing...");
-    let $message = $($('.message_template').clone().html());
-    $message.addClass(side).find('.user').html(message.login);
-    $message.addClass(side).find('.text').html(message.message);
-    $('.messages').append($message);
-    return setTimeout(function () {
-        return $message.addClass('appeared');
-    }, 0);
 }
 
 function onUserConnectOrDisconnect(response) {
@@ -60,13 +55,32 @@ function onUserConnectOrDisconnect(response) {
     }
 }
 
+function onCurrentUserConnect(response) {
+    let messages = JSON.parse(response.body);
+    for (let i = 0; i < messages.length; i++) {
+        draw("left", messages[i]);
+    }
+}
+
+function draw(side, message) {
+    console.log("drawing...");
+    let $message = $($('.message_template').clone().html());
+    $message.addClass(side).find('.user').html(message.from);
+    $message.addClass(side).find('.text').html(message.message);
+    $('.messages').append($message);
+    return setTimeout(function () {
+        return $message.addClass('appeared');
+    }, 0);
+}
+
 function sendMessage() {
-    let text = $("#message_input_value").val();
+    let messageInputValue = document.getElementById("message_input_value");
+    let text = messageInputValue.value;
     if (text !== null && text !== "") {
-        stompClient.send("/app/message", {}, JSON.stringify({// /app - application destination
+        stompClient.send("/app/message", {}, JSON.stringify({
             'message': text,
-            'login': user.login,
-            'password': user.password
+            'from': user.login
         }));
     }
+    messageInputValue.value = "";
 }

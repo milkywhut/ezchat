@@ -11,12 +11,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Message {
 
-    private String login;
-    private String password;
+    private String from;
     private String message;
-
-    public Message(String login, String message) {
-        this.login = login;
-        this.message = message;
-    }
 }

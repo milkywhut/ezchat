@@ -1,6 +1,10 @@
 package org.dinsyaopin.ezchat.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
 import org.dinsyaopin.ezchat.model.Type;
 import org.dinsyaopin.ezchat.model.User;
 import org.dinsyaopin.ezchat.service.UserService;
@@ -14,12 +18,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
-
+/**
+ * This class is necessary for handling activity of the sessions.
+ */
 @Component
 @Slf4j
 public class WebSocketListener {
@@ -37,33 +40,47 @@ public class WebSocketListener {
         this.messageSendingOperations = messageSendingOperations;
     }
 
-
+    /**
+     * Handles session connection event.
+     *
+     * @param event event of session connection
+     */
     @EventListener
     public void handleConnection(SessionConnectedEvent event) {
         StompHeaderAccessor stompAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        GenericMessage connectHeader = (GenericMessage) stompAccessor.getHeader(SimpMessageHeaderAccessor.CONNECT_MESSAGE_HEADER);
-        Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) connectHeader.getHeaders().get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
+        GenericMessage connectHeader =
+                (GenericMessage) stompAccessor.getHeader(SimpMessageHeaderAccessor.CONNECT_MESSAGE_HEADER);
+        Map<String, List<String>> nativeHeaders =
+                (Map<String, List<String>>) connectHeader.getHeaders().get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
         String login = Objects.requireNonNull(nativeHeaders).get("login").get(0);
         String sessionId = stompAccessor.getSessionId();
         log.info("New session by user <{}> with sessionId <{}>", login, sessionId);
         User user = new User(login, sessionId);
-        long userSessions = userService.getActiveUsers().parallelStream().map(User::getLogin).filter(login::equals).count();
+        long userSessions =
+                userService.getActiveUsers().parallelStream().map(User::getLogin).filter(login::equals).count();
         if (userSessions == 0) {
             messageSendingOperations.convertAndSend("/users/user", new User(login, Type.CONNECTED));
         }
         userService.add(user);
     }
 
+    /**
+     * Handles session disconnection event.
+     *
+     * @param event event of session connection
+     */
     @EventListener
     public void handleDisconnection(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = headerAccessor.getSessionId();
-        Optional<User> user = userService.getActiveUsers().parallelStream().filter((f) -> f.getSessionId().equals(sessionId)).findAny();
+        Optional<User> user =
+                userService.getActiveUsers().parallelStream().filter((f) -> f.getSessionId().equals(sessionId)).findAny();
         if (user.isPresent()) {
             String login = user.get().getLogin();
             log.info("End of the session <{}> by user <{}>", sessionId, login);
             userService.remove(user.get());
-            long userSessions = userService.getActiveUsers().parallelStream().map(User::getLogin).filter(login::equals).count();
+            long userSessions =
+                    userService.getActiveUsers().parallelStream().map(User::getLogin).filter(login::equals).count();
             if (userSessions == 0) {
                 messageSendingOperations.convertAndSend("/users/user", new User(login, Type.DISCONNECTED));
             }
