@@ -2,10 +2,7 @@ package org.dinsyaopin.chatbot;
 
 import org.dinsyaopin.chatbot.model.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.simp.stomp.StompHeaders;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandler;
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.messaging.simp.stomp.*;
 import org.springframework.web.socket.WebSocketHttpHeaders;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
@@ -14,6 +11,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +38,33 @@ public class ChatBot {
         StompHeaders headers = new StompHeaders();
         headers.setLogin(LOGIN);
         StompSession session = stompClient
-                .connect(URL, (WebSocketHttpHeaders) null, headers, sessionHandler, IP, PORT, ENDPOINT).get();
+                .connect(URL, (WebSocketHttpHeaders) null, headers, new StompSessionHandlerAdapter() {
+                    @Override
+                    public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+                        Message message = new Message(System.getProperty("login"), "Hi! I'm habr bot! I have some reading stuff for ya!");
+                        session.send("/app/message", message);
+                    }
+
+                    @Override
+                    public Type getPayloadType(StompHeaders headers) {
+                        return Message.class;
+                    }
+
+                    @Override
+                    public void handleFrame(StompHeaders headers, Object payload) {
+                        super.handleFrame(headers, payload);
+                    }
+
+                    @Override
+                    public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
+                        super.handleException(session, command, headers, payload, exception);
+                    }
+
+                    @Override
+                    public void handleTransportError(StompSession session, Throwable exception) {
+                        super.handleTransportError(session, exception);
+                    }
+                }, IP, PORT, ENDPOINT).get();
         session.subscribe("/chat/message", new StompSessionHandlerAdapter() {
 
             @Override
@@ -50,6 +74,26 @@ public class ChatBot {
                     String habrLink = bot.getLink(message);
                     session.send("/app/message", habrLink);
                 }
+            }
+
+            @Override
+            public Type getPayloadType(StompHeaders headers) {
+                return Message.class;
+            }
+
+            @Override
+            public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
+                super.afterConnected(session, connectedHeaders);
+            }
+
+            @Override
+            public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
+                super.handleException(session, command, headers, payload, exception);
+            }
+
+            @Override
+            public void handleTransportError(StompSession session, Throwable exception) {
+                super.handleTransportError(session, exception);
             }
 
             private boolean notFromBot(Message message) {
