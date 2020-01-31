@@ -30,6 +30,6 @@ public class BotStompSessionHandler implements StompSessionHandler {
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
-        System.out.println("BLA BLA BLA BLA BLA BLA");
+        System.out.println(1);
     }
 }
