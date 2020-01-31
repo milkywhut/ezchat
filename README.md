@@ -30,7 +30,10 @@ A simple browser chat based on Spring framework and websocket technology.
   ```
 
 # How to start bot?
-  After the end of bot building enter in command line interpreter the command:
+  After the end of bot building:
+  1. Set up postgresql database <db_name> without adding tables.
+  2. Add properties for connection to database in file hibernate.cfg.xml.
+  3. Enter in command line interpreter the command:
   ```
   java -Dport=<same port as in chat> -Dlogin=<some name of bot> -Dip=localhost -Dendpoint=chat-messaging -jar <name of jar file>
   ```
