@@ -1,4 +1,4 @@
-package org.dinsyaopin.chatbot;
+package org.dinsyaopin.chatbot.repository;
 
 import org.dinsyaopin.chatbot.model.Message;
 

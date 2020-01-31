@@ -1,6 +1,7 @@
-package org.dinsyaopin.chatbot;
+package org.dinsyaopin.chatbot.service;
 
 import org.dinsyaopin.chatbot.model.Message;
+import org.dinsyaopin.chatbot.repository.BotRepository;
 
 public class BotService {
 
