@@ -17,6 +17,7 @@ A simple browser chat based on Spring framework and websocket technology.
   ```
   mvn package;
   ```
+  Jar file would be placed in the target directory of ezchat module.
   
 # How to start app?
   After the end of app building enter in command line interpreter the command:
@@ -28,7 +29,7 @@ A simple browser chat based on Spring framework and websocket technology.
   ```
   mvn package;
   ```
-
+  Jar file would be placed in the target directory of chatbot module.
 # How to start bot?
   After the end of bot building:
   1. Set up postgresql database <db_name> without adding tables.
