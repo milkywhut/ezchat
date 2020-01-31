@@ -1,6 +1,5 @@
 package org.dinsyaopin.chatbot.service;
 
-import org.dinsyaopin.chatbot.repository.BotRepository;
 import org.dinsyaopin.chatbot.repository.StompSessionRepository;
 import org.springframework.messaging.simp.stomp.StompSession;
 

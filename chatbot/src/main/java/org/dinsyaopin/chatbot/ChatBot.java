@@ -7,7 +7,6 @@ import java.util.concurrent.ExecutionException;
 
 import org.dinsyaopin.chatbot.handlers.OnConnect;
 import org.dinsyaopin.chatbot.handlers.OnGetMessage;
-import org.dinsyaopin.chatbot.model.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -29,7 +28,6 @@ public class ChatBot {
     public static final String LOGIN = System.getProperty("login");
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        ChatBot bot = new ChatBot();
         List<Transport> transports = new ArrayList<>(1);
         transports.add(new WebSocketTransport(new StandardWebSocketClient()));
         WebSocketClient client = new SockJsClient(transports);

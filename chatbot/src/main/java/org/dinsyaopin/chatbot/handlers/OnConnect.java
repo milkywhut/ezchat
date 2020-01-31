@@ -51,7 +51,7 @@ public class OnConnect implements StompSessionHandler {
         try {
             session.disconnect();
         } catch (Exception e) {
-            log.warn("can not disconnect from session with error {}", e);
+            log.warn("can not disconnect from session with error ", e);
         }
     }
 }

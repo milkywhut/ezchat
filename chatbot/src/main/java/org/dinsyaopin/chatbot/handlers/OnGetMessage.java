@@ -2,9 +2,9 @@ package org.dinsyaopin.chatbot.handlers;
 
 import java.lang.reflect.Type;
 
-import org.dinsyaopin.chatbot.service.BotService;
 import org.dinsyaopin.chatbot.ChatBot;
 import org.dinsyaopin.chatbot.model.Message;
+import org.dinsyaopin.chatbot.service.BotService;
 import org.dinsyaopin.chatbot.service.StompSessionService;
 import org.springframework.messaging.simp.stomp.ConnectionLostException;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -17,9 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class OnGetMessage implements StompSessionHandler {
 
-    private StompSessionService stompSessionService =StompSessionService.getInstance();
+    private StompSessionService stompSessionService = StompSessionService.getInstance();
 
     private BotService botService = BotService.getInstance();
+
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         Message message = (Message) payload;
