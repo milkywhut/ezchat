@@ -1,12 +1,15 @@
 package org.dinsyaopin.chatbot.service;
 
-import org.dinsyaopin.chatbot.model.Message;
+import java.util.Random;
+
 import org.dinsyaopin.chatbot.repository.BotRepository;
 
 public class BotService {
 
     private static BotService INSTANCE;
     private BotRepository botRepository = BotRepository.getInstance();
+    private static int ACTUAL_MAX_POSTFIX_OF_POST = 486372;
+    private static final String URL_PREFIX = "https://habr.com/ru/post/";
 
     private BotService() {
 
@@ -23,7 +26,23 @@ public class BotService {
         return INSTANCE;
     }
 
-    public String getLink(Message message) {
-        return botRepository.getLink(message);
+    public String getLink(String login) {
+        return botRepository.getLink(login);
+    }
+
+    public String makeLink(String login) {
+        for (; ; ) {
+            Random random = new Random();
+            int actualPostNumber = random.nextInt(ACTUAL_MAX_POSTFIX_OF_POST);
+            StringBuilder linkBuilder = new StringBuilder()
+                    .append(URL_PREFIX)
+                    .append(actualPostNumber)
+                    .append("/");
+            String link = linkBuilder.toString();
+            if (!link.equals(getLink(login))) {
+                botRepository.setLinkForUser(link, login);
+                return link;
+            }
+        }
     }
 }

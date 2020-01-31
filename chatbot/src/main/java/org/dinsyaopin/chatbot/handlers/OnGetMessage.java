@@ -14,6 +14,9 @@ import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Handler of onGetMessage event of StompSocketSession.
+ */
 @Slf4j
 public class OnGetMessage implements StompSessionHandler {
 
@@ -21,11 +24,19 @@ public class OnGetMessage implements StompSessionHandler {
 
     private BotService botService = BotService.getInstance();
 
+    /**
+     * Checks if message was sent from bot. If not then generate link to habr's random post.
+     * After generation link sends to chat.
+     *
+     * @param headers
+     * @param payload
+     */
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
         Message message = (Message) payload;
-        if (isNotFromBot(message)) {
-            String habrLink = botService.getLink(message);
+        String login = message.getFrom();
+        if (isNotFromBot(login)) {
+            String habrLink = botService.makeLink(login);
             Message messageFromBot = new Message(ChatBot.LOGIN, habrLink);
             StompSession session = stompSessionService.get();
             session.send("/app/message", messageFromBot);
@@ -37,6 +48,9 @@ public class OnGetMessage implements StompSessionHandler {
         return Message.class;
     }
 
+    /**
+     * This implementation is empty.
+     */
     @Override
     public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
     }
@@ -57,12 +71,18 @@ public class OnGetMessage implements StompSessionHandler {
         try {
             session.disconnect();
         } catch (Exception e) {
-            log.warn("can not disconnect from session with error {}", e);
+            log.warn("can not disconnect from session with error ", e);
         }
     }
 
-    private boolean isNotFromBot(Message message) {
-        return !ChatBot.LOGIN.equals(message.getFrom());
+    /**
+     * Checks if message wasn't sent from bot.
+     *
+     * @param login user's login received from chat.
+     * @return true if message wasn't sent from bot.
+     */
+    private boolean isNotFromBot(String login) {
+        return !ChatBot.LOGIN.equals(login);
     }
 
     /**
@@ -73,6 +93,6 @@ public class OnGetMessage implements StompSessionHandler {
      */
     @Deprecated
     private boolean addressedToMe(Message message) {
-        return "/bot".equals(message.getMessage());
+        return "/bot".equals(message.getFrom());
     }
 }

@@ -12,6 +12,9 @@ import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Handler of onConnect event of StompSocketSession.
+ */
 @Slf4j
 public class OnConnect implements StompSessionHandler {
 
@@ -26,15 +29,25 @@ public class OnConnect implements StompSessionHandler {
         session.send("/app/message", message);
     }
 
+    /**
+     * This implementation returns {@link Message} as the expected payload type
+     * for STOMP payload frames.
+     */
     @Override
     public Type getPayloadType(StompHeaders headers) {
         return Message.class;
     }
 
+    /**
+     * This implementation is empty.
+     */
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
     }
 
+    /**
+     *  This handler
+     */
     @Override
     public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload,
                                 Throwable exception) {
