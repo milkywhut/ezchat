@@ -52,7 +52,13 @@ public class WebSocketListener {
                 (GenericMessage) stompAccessor.getHeader(SimpMessageHeaderAccessor.CONNECT_MESSAGE_HEADER);
         Map<String, List<String>> nativeHeaders =
                 (Map<String, List<String>>) connectHeader.getHeaders().get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
-        String login = Objects.requireNonNull(nativeHeaders).get("login").get(0);
+        String login;
+        try {
+            login = Objects.requireNonNull(nativeHeaders).get("login").get(0);
+        } catch (NullPointerException e) {
+            log.error("Login should be set to connect to the chat.", e);
+            throw new NullPointerException();
+        }
         String sessionId = stompAccessor.getSessionId();
         log.info("New session by user <{}> with sessionId <{}>", login, sessionId);
         User user = new User(login, sessionId);
