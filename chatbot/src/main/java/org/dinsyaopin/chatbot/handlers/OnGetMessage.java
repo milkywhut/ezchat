@@ -36,7 +36,7 @@ public class OnGetMessage implements StompSessionHandler {
         Message message = (Message) payload;
         String login = message.getFrom();
         if (isNotFromBot(login)) {
-            String habrLink = botService.makeLink(login);
+            String habrLink = botService.generateLink(login);//TODO maybe get pool of post and then check their status before sending to chat?
             Message messageFromBot = new Message(ChatBot.LOGIN, habrLink);
             StompSession session = stompSessionService.get();
             session.send("/app/message", messageFromBot);

@@ -30,14 +30,17 @@ public class BotService {
         return botRepository.getLink(login);
     }
 
-    public String makeLink(String login) {
+    public String generateLink(String login) {
         for (; ; ) {
             Random random = new Random();
             int actualPostNumber = random.nextInt(ACTUAL_MAX_POSTFIX_OF_POST);
             StringBuilder linkBuilder = new StringBuilder()
+                    .append("<a href=\"")
                     .append(URL_PREFIX)
                     .append(actualPostNumber)
-                    .append("/");
+                    .append("/\">")
+                    .append("post")
+                    .append("</a>");
             String link = linkBuilder.toString();
             if (!link.equals(getLink(login))) {
                 botRepository.setLinkForUser(link, login);
