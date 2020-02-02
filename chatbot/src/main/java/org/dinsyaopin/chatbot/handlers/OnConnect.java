@@ -45,9 +45,6 @@ public class OnConnect implements StompSessionHandler {
     public void handleFrame(StompHeaders headers, Object payload) {
     }
 
-    /**
-     *  This handler
-     */
     @Override
     public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload,
                                 Throwable exception) {

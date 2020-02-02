@@ -11,10 +11,12 @@
     <script src="script.js"></script>
 </head>
 <body>
-    <h1>Simple chat</h1>
-    <form id="authentication" onsubmit="return false;">
-        <input type="text" id="username" placeholder="Username" autofocus/>
-        <input type="password" id="password" placeholder="Password"/>
+<!--    <h1>Simple chat</h1>-->
+    <form id="authentication" onsubmit="return false;" title="Welcome to EzChat! Wanna text somebody?">
+        <p><label for="login">Login:</label> <input type="text" id="login" placeholder="Username" autofocus required/></p>
+        <p><label for="firstName">First name:</label> <input type="text" id="firstName" placeholder="First name" required/></p>
+        <p><label for="lastName">Second name:</label> <input type="text" id="lastName" placeholder="Second name" required/></p>
+        <p><label for="password">Password:</label> <input type="password" id="password" placeholder="Password" required /></p>
         <button class="button" onclick="connect()">Sign In</button>
 <!--        <span class="error" id="authentication-error"></span>-->
     </form>
@@ -39,9 +41,10 @@
     <div id="message_template" class="message_template">
         <div class="message">
             <div class="avatar">
-                <div class="user"></div>
+<!--                <div class="user"></div>-->
             </div>
             <div class="text_wrapper">
+                <div class="user_text"></div>
                 <div class="text"></div>
             </div>
         </div>

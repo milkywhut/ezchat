@@ -14,4 +14,8 @@ public interface UserRepository {
     void add(User user);
 
     void remove(User user);
+
+    List<User> getBySessionId(String sessionId);
+
+    long countNumberOfUserSessions(String login);
 }

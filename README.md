@@ -12,7 +12,10 @@ A simple browser chat based on Spring framework and websocket technology.
 # Requirements
   Java 8, maven, Chrome browser.
 
-# How to build app?
+# Notes
+  Firstly you should start the main application and then you should start the bot.
+  
+# How to build app?  
   Enter in command line interpreter the command:
   ```
   mvn package;

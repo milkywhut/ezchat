@@ -13,15 +13,8 @@ public class User {
 
     private String login;
     private String sessionId;
+    private String firstName;
+    private String lastName;
     private Type type;
 
-    public User(String login, Type type) {
-        this.login = login;
-        this.type = type;
-    }
-
-    public User(String login, String sessionId) {
-        this.login = login;
-        this.sessionId = sessionId;
-    }
 }

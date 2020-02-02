@@ -34,4 +34,12 @@ public class UserService {
     public void remove(@NotNull User user) {
         userRepository.remove(user);
     }
+
+    public List<User> getBySessionId(String sessionId) {
+        return userRepository.getBySessionId(sessionId);
+    }
+
+    public long countNumberOfUserSessions(String login) {
+        return userRepository.countNumberOfUserSessions(login);
+    }
 }

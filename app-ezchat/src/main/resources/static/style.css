@@ -1,12 +1,31 @@
 * {
     box-sizing: border-box;
 }
-
 body {
     background-color: #edeff2;
     font-family: "Calibri", "Roboto", sans-serif;
 }
-
+#authentication {
+    position: absolute;
+    width: calc(100% - 20px);
+    max-width: 200px;
+    height: 350px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    background-color: #f8f8f8;
+}
+#authentication p {
+    text-align: center;
+}
+input:invalid {
+    border: 2px solid #ff1e1a;
+    box-shadow: 0 1px 16px 4px #ff1e1a;
+}
+input:valid {
+    border: 2px solid black;
+}
 #chat_window {
     display: none;
     position: absolute;
@@ -18,9 +37,7 @@ body {
     transform: translateX(-50%) translateY(-50%);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     background-color: #f8f8f8;
-
 }
-
 .top_menu {
     background-color: #fff;
     width: 100%;
@@ -53,7 +70,6 @@ body {
     color: #bcbdc0;
     font-size: 20px;
 }
-
 .messages {
     position: relative;
     list-style: none;
@@ -81,8 +97,11 @@ body {
     right: 100%;
     border-right-color: #ffe6cb;
 }
+.messages .message.left .user_text {
+    color: #007bff;
+}
 .messages .message.left .text {
-    color: #c48843;
+    color: #92000e;
 }
 .messages .message.right .avatar {
     background-color: #fdbf68;
@@ -97,8 +116,11 @@ body {
     left: 100%;
     border-left-color: #c7eafc;
 }
+.messages .message.right .user_text {
+    color: #007bff;
+}
 .messages .message.right .text {
-    color: #45829b;
+    color: #92000e;
 }
 .messages .message.appeared {
     opacity: 1;
@@ -111,13 +133,11 @@ body {
     justify-content: center;
     align-items: center;
 }
-
 .messages .message .avatar .user {
     flex: 0 0 30px;
     color: #3300ff;
     text-align: center;
 }
-
 .messages .message .text_wrapper {
     display: inline-block;
     padding: 20px;
@@ -137,7 +157,7 @@ body {
 }
 .messages .message .text_wrapper::after {
     border-width: 13px;
-    margin-top: 0px;
+    margin-top: 0;
 }
 .messages .message .text_wrapper::before {
     border-width: 15px;
@@ -147,7 +167,6 @@ body {
     font-size: 18px;
     font-weight: 300;
 }
-
 .bottom_wrapper {
     width: 100%;
     background-color: #fff;
@@ -190,11 +209,9 @@ body {
     color: #a3d063;
     background-color: #fff;
 }
-
 .message_template {
     display: none;
 }
-
 #users {
     display: none;
     position: absolute;
@@ -208,7 +225,6 @@ body {
     top: 50%;
     left: 79%;
 }
-
 #users .user_active {
     text-align: center;
     margin-bottom: 5px;

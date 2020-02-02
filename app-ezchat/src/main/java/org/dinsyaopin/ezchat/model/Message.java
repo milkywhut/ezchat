@@ -13,4 +13,6 @@ public class Message {
 
     private String from;
     private String message;
+    private String firstName;
+    private String lastName;
 }

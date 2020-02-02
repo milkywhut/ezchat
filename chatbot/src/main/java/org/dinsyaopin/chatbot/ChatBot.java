@@ -36,6 +36,9 @@ public class ChatBot {
         StompSessionHandler onConnect = new OnConnect();
         StompHeaders headers = new StompHeaders();
         headers.setLogin(LOGIN);
+        headers.setPasscode("bot");
+        headers.set("firstName", "");
+        headers.set("lastName", "");
         StompSession session = stompClient.connect(URL, (WebSocketHttpHeaders) null, headers, onConnect, IP, PORT,
                 ENDPOINT).get();
         StompSessionHandler onGetMessage = new OnGetMessage();

@@ -1,12 +1,13 @@
 package org.dinsyaopin.ezchat.controller;
 
+import org.dinsyaopin.ezchat.model.User;
 import org.dinsyaopin.ezchat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UserController {
@@ -20,7 +21,7 @@ public class UserController {
 
     @MessageMapping("/users")
     @SendToUser("/users")
-    public List<String> getUsers() {
-        return userService.getActiveUsersLogins();
+    public Set<User> getActiveUsers() {
+        return userService.getActiveUsers();
     }
 }

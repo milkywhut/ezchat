@@ -16,4 +16,15 @@ public class Message {
     private String from;
     @JsonProperty("message")
     private String message;
+    @JsonProperty("firstName")
+    private String firstName;
+    @JsonProperty("lastName")
+    private String lastName;
+
+    public Message(String from, String message) {
+        this.from = from;
+        this.message = message;
+        this.firstName = "";
+        this.lastName = "";
+    }
 }
