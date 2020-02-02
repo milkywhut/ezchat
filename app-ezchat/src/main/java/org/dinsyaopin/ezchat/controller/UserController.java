@@ -7,7 +7,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
-import java.util.Set;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -21,7 +21,7 @@ public class UserController {
 
     @MessageMapping("/users")
     @SendToUser("/users")
-    public Set<User> getActiveUsers() {
+    public List<User> getActiveUsers() {
         return userService.getActiveUsers();
     }
 }

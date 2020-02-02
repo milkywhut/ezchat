@@ -88,12 +88,14 @@ public class WebSocketListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = headerAccessor.getSessionId();
         User userDisconnected = userService.getBySessionId(sessionId).get(0);
-        userService.remove(userDisconnected);
-        userDisconnected.setType(DISCONNECTED);
         String login = userDisconnected.getLogin();
-        log.info("End of the session <{}> by user <{}>", sessionId, login);
         long userSessionsNumber = userService.countNumberOfUserSessions(login);
-        if (userSessionsNumber == 0) {
+        if (userSessionsNumber > 1) {
+            userService.remove(userDisconnected);
+        }
+        log.info("End of the session <{}> by user <{}>", sessionId, login);
+        if (userSessionsNumber == 1) {
+            userDisconnected.setType(DISCONNECTED);
             messageSendingOperations.convertAndSend("/users/user", userDisconnected);
         }
     }
