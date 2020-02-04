@@ -9,5 +9,4 @@ public class EzchatApplication {
     public static void main(String[] args) {
         SpringApplication.run(EzchatApplication.class, args);
     }
-
 }

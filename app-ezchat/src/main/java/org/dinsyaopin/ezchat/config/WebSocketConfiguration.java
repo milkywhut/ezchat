@@ -1,4 +1,4 @@
-package org.dinsyaopin.ezchat;
+package org.dinsyaopin.ezchat.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

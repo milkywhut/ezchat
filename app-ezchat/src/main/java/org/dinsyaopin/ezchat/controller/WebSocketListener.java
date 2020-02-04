@@ -2,7 +2,6 @@ package org.dinsyaopin.ezchat.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.dinsyaopin.ezchat.model.User;
 import org.dinsyaopin.ezchat.service.UserService;
