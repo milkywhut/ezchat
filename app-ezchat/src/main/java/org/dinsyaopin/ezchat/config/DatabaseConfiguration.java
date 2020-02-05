@@ -13,7 +13,7 @@ public class DatabaseConfiguration {
     private String username;
     @Value("${jdbc.Password}")
     private String password;
-    @Value("${jdbc.Driver:org.postgresql.Driver}")
+    @Value("${jdbc.Driver}")
     private String driverClassName;
 
 }
